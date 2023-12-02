@@ -21,63 +21,63 @@ namespace NumberJuggle
             var sorter = new Sorter();
 
             Console.WriteLine("Welcome to NumberJuggle!\n\n");
-            Console.WriteLine("Enter a length for the number list:\n");
-            string strLength = Console.ReadLine();
-            if (strLength != null)
-            {
-                int intLength = Convert.ToInt32(strLength);
-                List<int> randomList = numberList.CreateList(intLength);
-                Console.WriteLine($"Random list generated: [{string.Join(", ", randomList.Take(10))}, ..., {randomList.Last()}]");
-                Console.WriteLine("Choose a sorting type from 1 to 5 (BubbleSort/SelectionSort/InsertionSort/QuickSort/MergeSort):\n");
-                string choice = Console.ReadLine();
-                DateTime startTime = DateTime.Now;
-                Console.WriteLine("\nSorting...");
-                SortChoosed(randomList, choice);
-                DateTime endTime = DateTime.Now;
-                TimeSpan timeSpend = endTime - startTime;
-                string sortType = "";
-                switch (choice)
-                {
-                    case "1":
-                        sortType = "BubbleSort";
-                        break;
-                    case "2":
-                        sortType = "SelectionSort";
-                        break;
-                    case "3":
-                        sortType = "InsertionSort";
-                        break;
-                    case "4":
-                        sortType = "QuickSort";
-                        break;
-                    case "5":
-                        sortType = "MergeSort";
-                        break;
-                    default:
-                        choice = "0";
-                        System.Threading.Thread.Sleep(1000);
-                        Console.Clear();
-                        Start();
-                        break;
-                }
+            string strLength;
+            int intLength;
 
-                Console.WriteLine($"Random list sorted with {sortType}: [{string.Join(", ", randomList.Take(10))}, ..., {randomList.Last()}]");
-                Console.WriteLine("Time span for sorting : " + timeSpend.TotalMilliseconds + " ms.");
-                AllSortedList(randomList, sortType);
-                Restart();
-            }
-            else
+            do
             {
-                Console.WriteLine("Type a correct value.");
-                Start();
+                Console.WriteLine("Enter a length for the number list:");
+                strLength = Console.ReadLine() ?? string.Empty; ;
+
+            } while (!int.TryParse(strLength, out intLength));
+
+            List<int> randomList = numberList.CreateList(intLength);
+
+            Console.WriteLine($"Random list generated: [{string.Join(", ", randomList.Take(10))}, ..., {randomList.Last()}]");
+            Console.WriteLine("Choose a sorting type from 1 to 5 (BubbleSort/SelectionSort/InsertionSort/QuickSort/MergeSort):\n");
+            string choice = Console.ReadLine() ?? string.Empty; ;
+            DateTime startTime = DateTime.Now;
+            Console.WriteLine("\nSorting...");
+            SortChoosed(randomList, choice);
+            DateTime endTime = DateTime.Now;
+            TimeSpan timeSpend = endTime - startTime;
+            string sortType = "";
+            switch (choice)
+            {
+                case "1":
+                    sortType = "BubbleSort";
+                    break;
+                case "2":
+                    sortType = "SelectionSort";
+                    break;
+                case "3":
+                    sortType = "InsertionSort";
+                    break;
+                case "4":
+                    sortType = "QuickSort";
+                    break;
+                case "5":
+                    sortType = "MergeSort";
+                    break;
+                default:
+                    choice = "0";
+                    System.Threading.Thread.Sleep(1000);
+                    Console.Clear();
+                    Start();
+                    break;
             }
-        }
+
+            Console.WriteLine($"Random list sorted with {sortType}: [{string.Join(", ", randomList.Take(10))}, ..., {randomList.Last()}]");
+            Console.WriteLine("Time span for sorting : " + timeSpend.TotalMilliseconds + " ms.");
+            AllSortedList(randomList, sortType);
+            Restart();
+    }
         
         public void AllSortedList(List<int> randomList, string sT)
         {
             Console.WriteLine("\nDo you want to see the all sorted list? (Y/N)");
-            string answer = Console.ReadLine();
-            string answerUp = answer.ToUpper();
+            string answer = Console.ReadLine() ?? string.Empty; ;
+            string answerUp  = answer.ToUpper();
             if (answerUp == "Y")
             {
                 ViewAllSortedList(randomList, sT);
@@ -97,7 +97,7 @@ namespace NumberJuggle
         public void Restart()
         {
             Console.WriteLine("\nDo you want to try with a new list? (Y/N)");
-            string answer = Console.ReadLine()?.Trim().ToUpper();
+            string answer = Console.ReadLine()?.Trim().ToUpper() ?? string.Empty; 
 
             if (answer == "Y")
             {
@@ -152,7 +152,7 @@ namespace NumberJuggle
 
             for (int i = 0; i < l; i++)
             {
-                randomList.Add(random.Next(1, 1001));
+                randomList.Add(random.Next(1, 100001));
             }
 
             return randomList;
